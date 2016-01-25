@@ -1,0 +1,461 @@
+@font-face {
+    font-family: 'Star Jedi';
+    src: url('/static/battle/fonts/starjedi-webfont.eot');
+    src: url('/static/battle/fonts/starjedi-webfont.eot?#iefix') format('embedded-opentype'),
+    url('/static/battle/fonts/starjedi-webfont.woff2') format('woff2'),
+    url('/static/battle/fonts/starjedi-webfont.woff') format('woff'),
+    url('/static/battle/fonts/starjedi-webfont.ttf') format('truetype'),
+    url('/static/battle/fonts/starjedi-webfont.svg#star_jediregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    font-family: 'Roboto Condensed', sans-serif;
+    position: relative;
+}
+
+#viewport {
+    min-height: 100%;
+    max-height: 100%;
+    min-width: 980px;
+    overflow: auto;
+    position: relative;
+}
+
+header {
+    position: relative;
+}
+
+.title {
+    font-size: 6em;
+    color: gold;
+    text-align: center;
+    font-family: 'Star Jedi', sans-serif;
+    line-height: 0.7em;
+}
+
+.title small {
+    font-size: 0.5em;
+}
+
+/**
+ * Battle form
+ */
+.battle {
+    margin: auto;
+    z-index: 100;
+}
+
+.battle form {
+    width: 100%;
+    text-align: center;
+    margin-top: 150px;
+    margin-bottom: 60px;
+}
+
+.battle fieldset {
+    border: none;
+    padding: 200px 0 0;
+    margin: 0 0 44px;
+}
+
+.battle fieldset > * {
+    vertical-align: top;
+}
+
+.battle .repo {
+    display: inline-block;
+    position: relative;
+}
+
+.battle .vs {
+    display: inline-block;
+    text-align: center;
+    font-size: 2em;
+    height: 40px;
+    line-height: 38px;
+    color: white;
+    font-family: 'Star Jedi', sans-serif;
+    padding: 8px 32px;
+}
+
+.battle input[type="text"] {
+    display: block;
+    font-size: 2em;
+    width: 380px;
+    height: 40px;
+    padding: 8px 16px;
+    background-color: rgba(255,255,255, 0.1);
+    border: none;
+    box-shadow: 0 0 10px rgba(0,0,0, 0.4);
+    color: #ffffff;
+    font-weight: 300;
+}
+
+.battle input[type="text"]:focus,
+.battle button[type="submit"]:focus {
+    outline-color: gold;
+}
+
+.battle button[type="submit"] {
+    background-color: rgba(255,255,255, 0);
+    background-image: url('/static/battle/img/icon-fencing.svg');
+    background-repeat: no-repeat;
+    background-position: 32px center;
+    background-size: 1em;
+    border: 2px solid rgba(255,255,255, 0.8);
+    border-radius: 4px;
+    text-align: center;
+    font-size: 1.6em;
+    color: rgba(255,255,255, 0.8);
+    padding: 12px 32px 12px 68px;
+    text-transform: uppercase;
+    margin-top: 40px;
+    transition: background-color 250ms linear, color 200ms linear;
+}
+
+.battle button[type="submit"]:hover,
+.battle button[type="submit"]:active {
+    background-color: rgba(255,255,255, 0.5);
+    color: rgba(0,0,0, 1);
+}
+
+
+/**
+ * Repo Chart
+ */
+.repo-chart {
+    position: absolute;
+    bottom: 56px;
+    left: 0;
+    height: 200px;
+    width: 100%;
+}
+
+.repo-chart > .counter {
+    margin: 0;
+    position: absolute;
+    bottom: 0;
+    width: 100px;
+    height: 0;
+    min-height: 0;
+    transition: height 1s ease-in-out, min-height 1s ease-in-out;
+}
+.repo-chart.show > .counter {
+    min-height: 2em;
+}
+
+.repo-chart > .counter > .count {
+    padding: 0;
+    margin-top: 8px;
+    font-size: 1.2em;
+    font-weight: bold;
+    position: relative;
+    top: 0.4em;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+.repo-chart.show > .counter > .count {
+    opacity: 1;
+}
+
+.repo-chart > .counter > .icon {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    margin-left: -15px;
+    background-position: center;
+    background-size: cover;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+.repo-chart.show > .counter > .icon {
+    opacity: 1;
+}
+
+.repo-chart > .counter.stars {
+    background-color: rgba(255,215,0, 0.6);
+    border-color: rgba(255,215,0, 0.6);
+}
+.repo-chart > .counter.stars .icon {
+    background-image: url('/static/battle/img/icon-star.svg');
+}
+.repo-chart > .counter.subs {
+    background-color: rgba(0,204,255, 0.6);
+    border-color: rgba(0,204,255, 0.6);
+}
+.repo-chart > .counter.subs .icon {
+    background-image: url('/static/battle/img/icon-eye.svg');
+}
+.repo-chart > .counter.forks {
+    background-color: rgba(36,255,0, 0.6);
+    border-color: rgba(36,255,0, 0.6);
+}
+.repo-chart > .counter.forks .icon {
+    background-image: url('/static/battle/img/icon-fork.svg');
+}
+
+.repo.left .counter.stars {
+    left: 0;
+}
+.repo.left .counter.subs {
+    left: 120px;
+}
+.repo.left .counter.forks {
+    left: 240px;
+}
+
+.repo.right .counter.stars {
+    right: 0;
+}
+.repo.right .counter.subs {
+    right: 120px;
+}
+.repo.right .counter.forks {
+    right: 240px;
+}
+
+
+/**
+ * Input Alert
+ */
+.repo-input .alert {
+    width: 100%;
+    position: absolute;
+    bottom: -44px;
+    background-color: transparent;
+    transform: translate3d(0, -20px, 0);
+    opacity: 0;
+    transition: all 500ms ease-in-out;
+}
+.repo-input .alert.show {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+}
+
+.alert.error {
+    color: #fff;
+    background-color: rgba(255, 0, 0, 0.4);
+}
+.alert.result {
+    color: #000;
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 10px rgba(255,255,255, 0.5);
+    font-family: Star Jedi, sans-serif;
+}
+.alert.result.winner {
+    color: rgba(0,128,0, 1);
+    box-shadow: 0 0 10px rgba(0,200,0, 0.8);
+}
+.alert.result.loser {
+    color: rgba(200,0,0, 1);
+    box-shadow: 0 0 10px rgba(200, 0, 0, 0.8);
+}
+
+.alert p {
+    margin: 0;
+    padding: 12px 24px;
+    height: 20px;
+}
+.alert.result p {
+    padding: 6px 24px;
+    height: 32px;
+    font-size: 1.6em;
+    line-height: 1.2em;
+}
+
+
+/**
+ * Octocats!
+ */
+.octocat {
+    width: 250px;
+    height: 200px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    position: absolute;
+    zoom: 0.8;
+    top: 0;
+    margin: 0;
+    z-index: -5;
+}
+.octocat.jedi {
+    background-image: url('/static/battle/img/octocat-jedi.png');
+    left: 50px;
+    animation: jedi-hover 2s infinite ease-in-out;
+}
+.octocat.sith {
+    background-image: url('/static/battle/img/octocat-sith.png');
+    right: 50px;
+    animation: sith-hover 2s infinite ease-in-out;
+}
+
+@keyframes jedi-hover {
+    0%,
+    100%{
+        transform: translate3d(0,-15px,0);
+    }
+    50% {
+        transform: translate3d(0,-20px,0);
+    }
+}
+
+@keyframes sith-hover {
+    0%,
+    100%{
+        transform: translate3d(0,-20px,0);
+    }
+    50% {
+        transform: translate3d(0,-15px,0);
+    }
+}
+
+
+/**
+ * Background
+ */
+#bg {
+    background: #000;
+    color: #f8f8ff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    z-index: -10;
+}
+
+.underlay {
+    position: absolute;
+    top: 0;
+    min-width: 100%;
+    min-height: 100%;
+    height: auto;
+    width: auto;
+    opacity: 0;
+    transition: top 2s ease-in-out;
+}
+.underlay-bg-one {
+    animation: scale-underlay-bg-one 60s infinite;
+    animation-timing-function: linear;
+}
+.underlay-bg-two {
+    animation: scale-underlay-bg-two 60s infinite;
+    animation-timing-function: linear;
+}
+.underlay-one {
+    animation: scale-bg-one 45s infinite;
+    animation-timing-function: linear;
+}
+.underlay-two {
+    animation: scale-bg-two 45s infinite;
+    animation-timing-function: linear;
+}
+
+@keyframes scale-underlay-bg-one {
+    0% {
+        transform: scale(1);
+        opacity: 0;
+    }
+    6% {
+        opacity: 1;
+    }
+    56% {
+        opacity: 1;
+    }
+    60%,
+    100% {
+        transform: scale(1.3);
+        opacity: 0;
+    }
+}
+@keyframes scale-underlay-bg-two {
+    0% {
+        transform: scale(1.3);
+        opacity: 1;
+    }
+    4% {
+        opacity: 1;
+    }
+    10% {
+        transform: scale(1.35);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1);
+        opacity: 0;
+    }
+    54% {
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1.3);
+        opacity: 1;
+    }
+}
+@keyframes scale-bg-one {
+    0% {
+        transform: scale(1);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 1;
+    }
+    60%,
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+}
+@keyframes scale-bg-two {
+    0% {
+        transform: scale(1.5);
+        opacity: 1;
+    }
+    10% {
+        transform: scale(1.55);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1);
+        opacity: 0;
+    }
+    60% {
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1.5);
+        opacity: 1;
+    }
+}
+
+
+/**
+ * Responsive
+ */
+@media (min-width: 1200px) {
+    .battle .vs {
+        font-size: 2.5em;
+    }
+    .repo-input input[type="text"] {
+        width: 500px;
+    }
+    .octocat {
+        zoom: 1;
+        top: 40px;
+    }
+}
